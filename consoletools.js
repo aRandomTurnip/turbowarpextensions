@@ -52,7 +52,7 @@
             }
           },
           {
-            opcode: 'get_variable',
+            opcode: 'get_variable2',
             blockType: Scratch.BlockType.REPORTER,
             text: 'get variable [var]',
             arguments: {
@@ -63,13 +63,13 @@
             }
           },
           {
-            opcode: 'json_length',
+            opcode: 'popup2',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'length of array [json]',
+            text: 'Send popup [alert]',
             arguments: {
-              json: {
+              var: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: '[1,2,3]'
+                defaultValue: 'myJSVariable'
               }
             }
           },
@@ -342,17 +342,13 @@
             }
           },
           {
-            opcode: 'json_vm_setlist',
+            opcode: 'popup',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'set list [list] to content [json]',
+            text: 'Send popup [alert]',
             arguments: {
-              list: {
+              alert: {
                 type: Scratch.ArgumentType.STRING,
-                menu: 'get_list'
-              },
-              json: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: '["apple","banana"]'
+                defaultValue: '["Hello!"]'
               },
             }
           },
@@ -417,7 +413,7 @@
       }
     }
 
-    json_length({ json }) {
+    popup2({ alert }) {
       try {
         json = JSON.parse(json);
         return Object.keys(json).length;
@@ -637,11 +633,9 @@
       }
     }
 
-    json_vm_getlist({ list }, util) {
+    popup({ alert }) {
       try {
-        const listVariable = util.target.lookupVariableById(list);
-        if (listVariable) {
-          return JSON.stringify(listVariable.value);
+        alert(alert)
         }
       } catch (e) {
         // ignore
